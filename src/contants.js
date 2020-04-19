@@ -1,4 +1,4 @@
-const cardsData = [
+const columnsData = [
 	{
 		cards: [{ title: 'foo' }, { title: 'bar' }],
 		title: 'Winnie',
@@ -21,4 +21,4 @@ const cardsData = [
 	},
 ];
 
-export default cardsData;
+export default columnsData;

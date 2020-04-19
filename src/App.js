@@ -2,36 +2,38 @@ import React, { useState } from 'react';
 
 import './App.scss';
 import Column from './components/Column';
-import cardsData from './contants';
+import columnsData from './contants';
 
 function App() {
-	const [cards, setCards] = useState(cardsData);
+	const [columns, setColumns] = useState(columnsData);
 	const handleAddCard = (input, index) => {
-		let newCards = [...cards];
-		console.log(newCards);
-		newCards[index].cards.push({ title: input });
-		console.log(newCards);
-		setCards(newCards);
+		let newColumns = [...columns];
+		newColumns[index].cards.push({ title: input });
+		setColumns(newColumns);
 	};
 	const handleMoveCard = (currentColumn, nextColumn, cardIndex) => {
 		console.log(currentColumn, nextColumn, cardIndex);
-		const newCards = [...cards];
-		const cardToRemove = cards[currentColumn].cards.splice(cardIndex, 1)[0];
-		newCards[nextColumn].cards.push(cardToRemove);
-		setCards(newCards);
+		const newColumns = [...columns];
+		const cardToRemove = newColumns[currentColumn].cards.splice(
+			cardIndex,
+			1,
+		)[0];
+		newColumns[nextColumn].cards.push(cardToRemove);
+		setColumns(newColumns);
 	};
 
+	console.log(columns);
 	return (
 		<div className='App'>
 			<div className='columns-container'>
-				{cards.map((card) => (
+				{columns.map((column, i) => (
 					<Column
 						moveCard={handleMoveCard}
 						addCardToColumn={handleAddCard}
-						index={0}
-						titleColor={card.color}
-						title={card.title}
-						cards={card.cards}
+						index={i}
+						titleColor={column.color}
+						title={column.title}
+						cards={column.cards}
 					/>
 				))}
 			</div>
