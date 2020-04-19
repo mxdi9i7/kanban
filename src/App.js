@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import './App.scss';
+import Column from './components/Column';
+import cardsData from './contants';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [cards, setCards] = useState(cardsData);
+	const handleAddCard = (input, index) => {
+		let newCards = [...cards];
+		console.log(newCards);
+		newCards[index].cards.push({ title: input });
+		console.log(newCards);
+		setCards(newCards);
+	};
+	const handleMoveCard = (currentColumn, nextColumn, cardIndex) => {
+		console.log(currentColumn, nextColumn, cardIndex);
+		const newCards = [...cards];
+		const cardToRemove = cards[currentColumn].cards.splice(cardIndex, 1)[0];
+		newCards[nextColumn].cards.push(cardToRemove);
+		setCards(newCards);
+	};
+
+	return (
+		<div className='App'>
+			<div className='columns-container'>
+				{cards.map((card) => (
+					<Column
+						moveCard={handleMoveCard}
+						addCardToColumn={handleAddCard}
+						index={0}
+						titleColor={card.color}
+						title={card.title}
+						cards={card.cards}
+					/>
+				))}
+			</div>
+		</div>
+	);
 }
 
 export default App;
